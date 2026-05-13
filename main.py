@@ -10,11 +10,11 @@ def konyv_adatok_lekerese(isbn):
     try:
         valasz = requests.get(url)
         valasz.raise_for_status()
-        adat = valasz.json()
+        adatok = valasz.json()
 
         isbn_kulcs = f"ISBN:{isbn}"
-        if isbn_kulcs in adat:
-            konyv = adat[isbn_kulcs]
+        if isbn_kulcs in adatok:
+            konyv = adatok[isbn_kulcs]
             return {
                 "isbn": isbn,
                 "cim": konyv.get("title", "Ismeretlen cím"),
@@ -23,7 +23,7 @@ def konyv_adatok_lekerese(isbn):
                 "oldalszam": konyv.get("number_of_pages", "Nincs adat")
             }
         else:
-            print(f"[-] Nem található könyv ezzel az ISBN számmal: {isbn}")
+            print(f"[-] Nem található könyv ezzel az ISBN számmal :( : {isbn}")
             return None
     except Exception as e:
         print(f"[!] Hiba történt a lekérés során: {e}")
@@ -37,11 +37,11 @@ def mentes_json_fajlba(katalogus, fajlnev="konyveim.json"):
             json.dump(katalogus, f, ensure_ascii=False, indent=4)
         print(f"[+] Adatbázis frissítve: {fajlnev}")
     except IOError as e:
-        print(f"[!] Hiba a mentés során: {e}")
+        print(f"[!] Hiba volt a mentés során: {e}")
 
 
 def main():
-    print("--- Üdvözöllek a Mini Könyvregisztrálóban ---")
+    print("--- Üdvözöllek a Mini Könyvtáramban :) ---")
     katalogus = []
 
     # Ha már van korábbi mentés, töltsük be (opcionális, de profi)
